@@ -15,3 +15,28 @@ body{
      height: 100vh;
      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+.title {
+     font-size: 2rem;
+     color: goldenrod;
+     margin-bottom: 3rem;
+}
+
+.info,
+#cards,
+#sum{
+     margin-bottom: 1rem;
+     font-size: 1.3;
+}
+
+#start-btn,
+#newcard-btn {
+     color: #2a2727;
+     background-color: goldenrod;
+     border: none;
+     padding: .7rem 1rem;
+     font-weight: 600;
+     font-size: 1.1rem;
+     border-radius: 4px;
+     text-transform: uppercase;
+}
