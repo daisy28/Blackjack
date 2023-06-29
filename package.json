@@ -1,0 +1,22 @@
+{
+  "name": "solitaire",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daisy28/solitaire.git"
+  },
+  "author": "Gloria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daisy28/solitaire/issues"
+  },
+  "homepage": "https://github.com/daisy28/solitaire#readme",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
