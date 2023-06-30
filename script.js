@@ -10,7 +10,7 @@ const cardsEl = document.querySelector("#cards");
 const sumEl = document.querySelector("#sum");
 const newCardEl = document.querySelector("#newcard-btn");
 startBtn.addEventListener("click", () => {
-    startGame();
+    cards.length !== 2 ? startGame() : null;
 });
 newCardEl.addEventListener("click", () => {
     getNewCard();
@@ -19,12 +19,8 @@ const generateRandomNumbers = () => {
     const randomNumbers = Math.floor(Math.random() * 13);
     return randomNumbers;
 };
-const startGame = () => {
-    isAlive = true;
-    const firstCard = generateRandomNumbers();
-    const secondCard = generateRandomNumbers();
-    cards = [firstCard, secondCard];
-    sum = firstCard + secondCard;
+const renderGame = () => {
+    let cardTemplate = "";
     if (sum < 21) {
         message = "Do you want to draw a new card?";
     }
@@ -35,18 +31,28 @@ const startGame = () => {
     else {
         message = "You're out of the game!!";
         isAlive = false;
+        isWinner = false;
     }
     cards.map(card => {
-        cardsEl.textContent += ` ${card} `;
+        cardTemplate += `${card} `;
     });
-    sumEl.textContent = `Sum: ${sum}`;
+    cardsEl.innerHTML = `<span>Cards: ${cardTemplate} </span>`;
+    sumEl.innerHTML = `<span>Sum: ${sum}</span>`;
     info.textContent = message;
+};
+const startGame = () => {
+    isAlive = true;
+    const firstCard = generateRandomNumbers();
+    const secondCard = generateRandomNumbers();
+    cards = [firstCard, secondCard];
+    sum = firstCard + secondCard;
+    renderGame();
 };
 const getNewCard = () => {
     if (isAlive === true && isWinner === false) {
         const newCard = generateRandomNumbers();
         cards.push(newCard);
         sum += newCard;
-        startGame();
+        renderGame();
     }
 };

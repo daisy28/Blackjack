@@ -2,15 +2,15 @@ let cards: number[] = [];
 let sum = 0;
 let isAlive = false;
 let isWinner = false;
-let message = ""
-const info: Element = document.querySelector(".info");
-const startBtn: Element = document.querySelector("#start-btn");
-const cardsEl: Element = document.querySelector("#cards");
-const sumEl: Element = document.querySelector("#sum");
-const newCardEl: Element = document.querySelector("#newcard-btn");
+let message = "";
+const info: Element = document.querySelector(".info")!;
+const startBtn: Element = document.querySelector("#start-btn")!;
+const cardsEl: Element = document.querySelector("#cards")!;
+const sumEl: Element = document.querySelector("#sum")!;
+const newCardEl: Element = document.querySelector("#newcard-btn")!;
 
 startBtn.addEventListener("click", () => {
-     startGame();
+     cards.length !== 2 ? startGame() : null;
 });
 
 newCardEl.addEventListener("click", () => {
@@ -22,12 +22,8 @@ const generateRandomNumbers = () => {
      return randomNumbers;
 }
 
-const startGame = () => {
-     isAlive = true
-     const firstCard = generateRandomNumbers();
-     const secondCard = generateRandomNumbers();
-     cards = [firstCard, secondCard];
-     sum = firstCard + secondCard;
+const renderGame = () => {
+     let cardTemplate = ""
      if (sum < 21) {
           message = "Do you want to draw a new card?";
      } else if (sum === 21) {
@@ -36,12 +32,23 @@ const startGame = () => {
      } else {
           message = "You're out of the game!!";
           isAlive = false;
+          isWinner = false;
      }
      cards.map(card => {
-          cardsEl.textContent += ` ${card} `
-     })
-     sumEl.textContent = `Sum: ${sum}`
+          cardTemplate += `${card} `
+     });
+     cardsEl.innerHTML = `<span>Cards: ${cardTemplate} </span>`;
+     sumEl.innerHTML = `<span>Sum: ${sum}</span>`
      info.textContent = message;
+}
+
+const startGame = () => {
+     isAlive = true
+     const firstCard = generateRandomNumbers();
+     const secondCard = generateRandomNumbers();
+     cards = [firstCard, secondCard];
+     sum = firstCard + secondCard;
+     renderGame()
 }
 
 const getNewCard = () => {
@@ -49,6 +56,6 @@ const getNewCard = () => {
           const newCard = generateRandomNumbers();
           cards.push(newCard);
           sum += newCard;
-          startGame()
+          renderGame()
      }
 }
