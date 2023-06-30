@@ -4,15 +4,19 @@ let sum = 0;
 let isAlive = false;
 let isWinner = false;
 let message = "";
+let moves = 0;
+let score = 0;
 const info = document.querySelector(".info");
 const startBtn = document.querySelector("#start-btn");
 const cardsEl = document.querySelector("#cards");
 const sumEl = document.querySelector("#sum");
-const newCardEl = document.querySelector("#newcard-btn");
+const newCardBtn = document.querySelector("#newcard-btn");
+const movesEl = document.querySelector("#moves");
+const scoreEl = document.querySelector("#score");
 startBtn.addEventListener("click", () => {
-    cards.length !== 2 ? startGame() : null;
+    cards.length !== 2 ? playGame() : null;
 });
-newCardEl.addEventListener("click", () => {
+newCardBtn.addEventListener("click", () => {
     getNewCard();
 });
 const generateRandomNumbers = () => {
@@ -25,11 +29,14 @@ const renderGame = () => {
         message = "Do you want to draw a new card?";
     }
     else if (sum === 21) {
-        message = "Woohoo!! You won this round!";
         isWinner = true;
+        score += 20;
+        message = "Woohoo!! You won this round!";
     }
     else {
         message = "You're out of the game!!";
+        score = 0;
+        moves = 0;
         isAlive = false;
         isWinner = false;
     }
@@ -39,13 +46,21 @@ const renderGame = () => {
     cardsEl.innerHTML = `<span>Cards: ${cardTemplate} </span>`;
     sumEl.innerHTML = `<span>Sum: ${sum}</span>`;
     info.textContent = message;
+    movesEl.innerHTML = `Moves: ${moves}`;
+    scoreEl.innerHTML = `Score: ${score}`;
 };
 const startGame = () => {
+    console.log(isWinner);
     isAlive = true;
     const firstCard = generateRandomNumbers();
     const secondCard = generateRandomNumbers();
     cards = [firstCard, secondCard];
     sum = firstCard + secondCard;
+    moves++;
+    score += 5;
+};
+const playGame = () => {
+    startGame();
     renderGame();
 };
 const getNewCard = () => {
@@ -53,6 +68,8 @@ const getNewCard = () => {
         const newCard = generateRandomNumbers();
         cards.push(newCard);
         sum += newCard;
+        moves++;
+        score += 5;
         renderGame();
     }
 };
