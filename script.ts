@@ -2,7 +2,7 @@ let cards: number[] = [];
 let sum = 0;
 let isAlive = false;
 let isWinner = false;
-let message = "";
+let message = "Want to play a round?";
 let moves = 0;
 let score = 0;
 const info: Element = document.querySelector(".info")!;
@@ -12,9 +12,14 @@ const sumEl: Element = document.querySelector("#sum")!;
 const newCardBtn: Element = document.querySelector("#newcard-btn")!;
 const movesEl: Element = document.querySelector("#moves")!;
 const scoreEl: Element = document.querySelector("#score")!;
+info.textContent = message;
 
 startBtn.addEventListener("click", () => {
-     cards.length !== 2 ? playGame() : null;
+     if (cards.length === 2 && sum !== 21) {
+          null
+     } else {
+          playGame();
+     }
 });
 
 newCardBtn.addEventListener("click", () => {
@@ -22,8 +27,24 @@ newCardBtn.addEventListener("click", () => {
 })
 
 const generateRandomNumbers = () => {
-     const randomNumbers = Math.floor(Math.random() * 13);
-     return randomNumbers;
+     const randomNumbers = Math.floor(Math.random() * 7);
+     if (randomNumbers > 10){
+          return 10;
+     } else if (randomNumbers === 1){
+          return 11;
+     } else {
+          return randomNumbers;
+     }
+}
+
+const startGame = () => {
+     isAlive = true
+     const firstCard = generateRandomNumbers();
+     const secondCard = generateRandomNumbers();
+     cards = [firstCard, secondCard];
+     sum = firstCard + secondCard;
+     moves = 1;
+     score = 5;
 }
 
 const renderGame = () => {
@@ -35,31 +56,24 @@ const renderGame = () => {
           score += 20;
           message = "Woohoo!! You won this round!";
      } else {
+          isAlive = false;
+          isWinner = false;
           message = "You're out of the game!!";
           score = 0;
           moves = 0;
-          isAlive = false;
-          isWinner = false;
      }
      cards.map(card => {
-          cardTemplate += `${card} `;
+          return cardTemplate += `${card} `;
      });
-     cardsEl.innerHTML = `<span>Cards: ${cardTemplate} </span>`;
-     sumEl.innerHTML = `<span>Sum: ${sum}</span>`;
-     info.textContent = message;
-     movesEl.innerHTML = `Moves: ${moves}`
-     scoreEl.innerHTML = `Score: ${score}`
+     updateUi(cardTemplate, sum, message, moves, score);
 }
 
-const startGame = () => {
-     console.log(isWinner)
-     isAlive = true
-     const firstCard = generateRandomNumbers();
-     const secondCard = generateRandomNumbers();
-     cards = [firstCard, secondCard];
-     sum = firstCard + secondCard;
-     moves++;
-     score += 5;
+const updateUi = (card: string, sum: number, message: string, moves: number, score: number) => {
+     cardsEl.innerHTML = `<span>Cards: ${card} </span>`;
+     sumEl.innerHTML = `<span>Sum: ${sum}</span>`;
+     info.textContent = message;
+     movesEl.innerHTML = `Moves: ${moves}`;
+     scoreEl.innerHTML = `Score: ${score}`;
 }
 
 const playGame = () => {
@@ -76,4 +90,17 @@ const getNewCard = () => {
           score += 5;
           renderGame();
      }
+     sum === 21 ? setTimeout(() => {
+          hasWon();
+     }, 5000): null;
 }
+
+const hasWon = () => {
+     sum = 0;
+     score = 0;
+     moves = 0;
+     message = "Start a new game";
+     isWinner = false;
+     isAlive = false;
+     updateUi("", "", message, moves, score);
+};
