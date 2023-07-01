@@ -1,5 +1,5 @@
 {
-  "name": "solitaire",
+  "name": "Blackjack",
   "version": "1.0.0",
   "description": "",
   "main": "script.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daisy28/solitaire.git"
+    "url": "git+https://github.com/daisy28/Blackjack.git"
   },
   "author": "Gloria",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/daisy28/solitaire/issues"
+    "url": "https://github.com/daisy28/Blackjack/issues"
   },
-  "homepage": "https://github.com/daisy28/solitaire#readme",
+  "homepage": "https://github.com/daisy28/Blackjack#readme",
   "devDependencies": {
     "typescript": "^5.1.6"
   }
